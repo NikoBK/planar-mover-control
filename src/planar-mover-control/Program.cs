@@ -9,7 +9,21 @@ namespace PlanarMoverControl
         private static XBotCommands _xbotCmds = new XBotCommands();
 
         public static void Main(string[] args) {
-            PMCStartup();
+            bool pmcStarted = PMCStartup();
+            if (pmcStarted) {
+                var xbotIds = GetXbotIds();
+                foreach (var id in xbotIds) {
+                    Mover mover = new Mover(id);
+                }
+            }
+            else {
+                Console.WriteLine("Failed to start PMC, false return value");
+                return;
+            }
+        }
+
+        public static List<int> GetXbotIds() {
+            return _xbotCmds.GetXBotIDS().XBotIDsArray.ToList();
         }
 
         private static bool PMCStartup(int expectedMovers = 0) {
