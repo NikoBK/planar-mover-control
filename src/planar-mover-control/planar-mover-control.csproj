@@ -8,4 +8,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="PMCLIB">
+      <HintPath>../../libs/PMCLIB.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
