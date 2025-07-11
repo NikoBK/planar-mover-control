@@ -413,3 +413,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# project related files (libs and etc)
+libs/
