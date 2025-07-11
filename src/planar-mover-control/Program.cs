@@ -20,7 +20,10 @@ namespace PlanarMoverControl
                     Movers.TryAdd(id, mover);
                 }
                 Console.WriteLine($"All movers initiated and added to dictionary. Total movers: {Movers.Count}");
-                Test();
+
+                // TESTING
+                //Test();
+                Test2(id: 1);
             }
             else {
                 Console.WriteLine("Failed to start PMC, false return value");
@@ -201,6 +204,22 @@ namespace PlanarMoverControl
             Console.WriteLine("All xbots succesfully initiated and levitates");
             Console.WriteLine("Start-up routine has completed (5/5)");
             return true;
+        }
+
+        private static void Test2(int id) {
+            Console.WriteLine($"Running single mover test for mover: {id}");
+
+            for (int i = 0; i < 5; i++) {
+                Movers[id].MoveTo(Constants.MovePointsTest[0]);
+                Movers[id].MoveTo(Constants.MovePointsTest[2]);
+                Movers[id].MoveTo(Constants.MovePointsTest[4]);
+                Movers[id].MoveTo(Constants.MovePointsTest[5]);
+                Movers[id].MoveTo(Constants.MovePointsTest[3]);
+                Movers[id].MoveTo(Constants.MovePointsTest[1]);
+            }
+
+            //Movers[id].MoveTo(new System.Numerics.Vector2(0.060f, 0.060f));
+            Console.WriteLine($"Single mover test for mover: {id} has concluded");
         }
 
         private static void Test() { //TODO eventually remove this
