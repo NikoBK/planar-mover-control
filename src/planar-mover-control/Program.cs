@@ -8,13 +8,19 @@ namespace PlanarMoverControl
         private static SystemCommands _sysCmds = new SystemCommands();
         private static XBotCommands _xbotCmds = new XBotCommands();
 
+        // Key: id, value: mover
+        private static Dictionary<int, Mover> Movers = new Dictionary<int, Mover>();
+
         public static void Main(string[] args) {
             bool pmcStarted = PMCStartup();
             if (pmcStarted) {
                 var xbotIds = GetXbotIds();
                 foreach (var id in xbotIds) {
-                    Mover mover = new Mover(id);
+                    Mover mover = new Mover(id, _xbotCmds);
+                    Movers.TryAdd(id, mover);
                 }
+                Console.WriteLine($"All movers initiated and added to dictionary. Total movers: {Movers.Count}");
+                Test();
             }
             else {
                 Console.WriteLine("Failed to start PMC, false return value");
@@ -195,6 +201,41 @@ namespace PlanarMoverControl
             Console.WriteLine("All xbots succesfully initiated and levitates");
             Console.WriteLine("Start-up routine has completed (5/5)");
             return true;
+        }
+
+        private static void Test() { //TODO eventually remove this
+            Console.WriteLine("Running movement test...");
+            bool running = true;
+            int i = 0;
+
+            while(running)
+            {
+                Movers[1].MoveTo(Constants.MovePointsTest[1]);
+                Movers[2].MoveTo(Constants.MovePointsTest[0]);
+                Thread.Sleep(2000);
+                Movers[1].MoveTo(Constants.MovePointsTest[2]);
+                Movers[2].MoveTo(Constants.MovePointsTest[1]);
+                Thread.Sleep(2000);
+                Movers[1].MoveTo(Constants.MovePointsTest[3]);
+                Movers[2].MoveTo(Constants.MovePointsTest[2]);
+                Thread.Sleep(2000);
+                Movers[1].MoveTo(Constants.MovePointsTest[4]);
+                Movers[2].MoveTo(Constants.MovePointsTest[3]);
+                Thread.Sleep(2000);
+                Movers[1].MoveTo(Constants.MovePointsTest[5]);
+                Movers[2].MoveTo(Constants.MovePointsTest[4]);
+                Thread.Sleep(2000);
+                Movers[1].MoveTo(Constants.MovePointsTest[0]);
+                Movers[2].MoveTo(Constants.MovePointsTest[5]);
+                Thread.Sleep(2000);
+
+                // Manage the while loop
+                i++;
+                if (i > 5) {
+                    running = false;
+                }
+            }
+            Console.WriteLine("Movement test has concluded");
         }
     }
 }
