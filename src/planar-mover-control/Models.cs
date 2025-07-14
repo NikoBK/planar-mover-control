@@ -1,5 +1,6 @@
 using PMCLIB;
 using System.Numerics;
+using log4net;
 
 namespace PlanarMoverControl
 {
@@ -8,19 +9,22 @@ namespace PlanarMoverControl
         public int Id { get; private set; }
         private XBotCommands? _cmds;
 
+        // Logging
+        private static readonly ILog _log = LogManager.GetLogger(typeof(Mover));
+
         public Mover(int id, XBotCommands? cmds = null) {
-            Console.WriteLine($"Initiated mover with id: {id}!");
+            _log.Info($"Initiated mover with id: {id}!");
             Id = id;
             _cmds = cmds;
             if (_cmds != null) {
-                Console.WriteLine($"Mover ({id}) initialized at coords: (X:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].XPos}; Y:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].YPos})");
+                _log.Debug($"Mover ({id}) initialized at coords: (X:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].XPos}; Y:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].YPos})");
             }
         }
 
         private void LoopedMovementTest()
         {
             if (_cmds == null) {
-                Console.WriteLine($"<Mover{Id}>: Failed to execute movement, xbot commands reference is null!");
+                _log.Warn($"Failed to execute movement for mover with id: {Id}, xbot commands reference is null!");
                 return;
             }
         }
@@ -29,15 +33,15 @@ namespace PlanarMoverControl
                             ushort cmdLabel = 0, POSITIONMODE posMode = POSITIONMODE.ABSOLUTE, LINEARPATHTYPE pathType = LINEARPATHTYPE.DIRECT,
                             double finalSpdMetersPs = 0, double maxSpdMetersPs = 0.5, double maxAccelerationMetersPs2 = 10) {
             if (_cmds == null) {
-                Console.WriteLine($"<Mover{Id}>: Failed to execute movement, xbot commands reference is null!");
+                _log.Warn($"Failed to execute movement for mover with id: {Id}, xbot commands reference is null!");
                 return;
             }
-            Console.WriteLine($"Shuttle {Id} is moving!");
+            _log.Debug($"Shuttle {Id} is moving!");
             _cmds.LinearMotionSI(cmdLabel, Id, posMode, pathType, pos.X, pos.Y, finalSpdMetersPs, maxSpdMetersPs, maxAccelerationMetersPs2);
-            Console.WriteLine("finished moving");
+            _log.Debug("finished moving");
 
             await Task.Delay(1000); // Buffer time to get the mover moving.
-            Console.WriteLine("time delay of 1s passed (async task)");
+            _log.Debug("time delay of 1s passed (async task)");
         }
     }
 }
