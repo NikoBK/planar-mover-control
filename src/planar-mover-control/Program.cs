@@ -1,5 +1,9 @@
 ﻿using PMCLIB;
 using System.Threading;
+using log4net;
+using log4net.Config;
+using System.IO;
+using System.Reflection;
 
 namespace PlanarMoverControl
 {
@@ -11,8 +15,18 @@ namespace PlanarMoverControl
         // Key: id, value: mover
         private static Dictionary<int, Mover> Movers = new Dictionary<int, Mover>();
 
+        // Logging
+        private static readonly ILog _log = LogManager.GetLogger(typeof(Program));
+
         public static async Task Main(string[] args)
         {
+            var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly()!);
+            XmlConfigurator.Configure(logRepo, new FileInfo("log4net.config"));
+
+            _log.Info("info test");
+            _log.Warn("warn test");
+            _log.Error("error test");
+
             bool pmcStarted = PMCStartup();
             if (pmcStarted)
             {
