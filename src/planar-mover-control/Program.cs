@@ -36,13 +36,15 @@ namespace PlanarMoverControl
                 _log.Info($"All movers initiated and added to dictionary. Total movers: {Movers.Count}");
 
                 // TESTING
-                //Test();
-                await Test2(id: 1);
+                _log.Debug("Running async test procedure...");
+                await Test();
+                //await Test2(id: 1);
             }
             else {
                 _log.Error("Failed to start PMC, false return value");
                 return;
             }
+            _log.Debug("Program finished running");
         }
 
         public static List<int> GetXbotIds() {
@@ -246,6 +248,7 @@ namespace PlanarMoverControl
             _log.Debug("Running movement test...");
             bool running = true;
             int i = 0;
+            int delay = 1000;
 
             while(running)
             {
@@ -257,24 +260,24 @@ namespace PlanarMoverControl
                  * await Task.WhenAll(t1, t2);
                  *
                  */
-                _ = Movers[1].MoveTo(Constants.MovePointsTest[1]);
-                _ = Movers[2].MoveTo(Constants.MovePointsTest[0]);
-                await Task.Delay(2000); // test time
-                _ = Movers[1].MoveTo(Constants.MovePointsTest[2]);
+                _ = Movers[1].MoveTo(Constants.MovePointsTest[0]);
                 _ = Movers[2].MoveTo(Constants.MovePointsTest[1]);
-                await Task.Delay(2000); // test time
-                _ = Movers[1].MoveTo(Constants.MovePointsTest[3]);
-                _ = Movers[2].MoveTo(Constants.MovePointsTest[2]);
-                await Task.Delay(2000); // test time
+                await Task.Delay(delay); // test time
+                _ = Movers[1].MoveTo(Constants.MovePointsTest[2]);
+                _ = Movers[2].MoveTo(Constants.MovePointsTest[0]);
+                await Task.Delay(delay); // test time
                 _ = Movers[1].MoveTo(Constants.MovePointsTest[4]);
-                _ = Movers[2].MoveTo(Constants.MovePointsTest[3]);
-                await Task.Delay(2000); // test time
+                _ = Movers[2].MoveTo(Constants.MovePointsTest[2]);
+                await Task.Delay(delay); // test time
                 _ = Movers[1].MoveTo(Constants.MovePointsTest[5]);
                 _ = Movers[2].MoveTo(Constants.MovePointsTest[4]);
-                await Task.Delay(2000); // test time
-                _ = Movers[1].MoveTo(Constants.MovePointsTest[0]);
+                await Task.Delay(delay); // test time
+                _ = Movers[1].MoveTo(Constants.MovePointsTest[3]);
                 _ = Movers[2].MoveTo(Constants.MovePointsTest[5]);
-                await Task.Delay(2000); // test time
+                await Task.Delay(delay); // test time
+                _ = Movers[1].MoveTo(Constants.MovePointsTest[1]);
+                _ = Movers[2].MoveTo(Constants.MovePointsTest[3]);
+                await Task.Delay(delay); // test time
 
                 // Manage the while loop
                 i++;

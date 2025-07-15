@@ -14,7 +14,3 @@ A fallback implementation (mock controller) may be provided in the future to all
 This project is intended for educational purposes only. The aforementioned dependency (`PMCLIB.dll`) is treated as a black box to interface with the ACOPOS 6D table and as a result this project will be suitable for other students working with a similar Acopos 6D table by B\&R.
 
 This project is unsupervised but follows the same conventions and licensing boundaries used in previous supervised semester projects with opensource repositories that used the same dependencies. This project does not provide documentation of methods, parameters, or interfaces from proprietary dependencies such as `PMCLIB.dll`.
-
-
-
--Nikolaj
