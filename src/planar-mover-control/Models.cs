@@ -12,12 +12,18 @@ namespace PlanarMoverControl
         // Logging
         private static readonly ILog _log = LogManager.GetLogger(typeof(Mover));
 
-        public Mover(int id, XBotCommands? cmds = null) {
+        public Mover(int id, XBotCommands? cmds = null, bool verbose = false) {
             _log.Info($"Initiated mover with id: {id}!");
             Id = id;
             _cmds = cmds;
-            if (_cmds != null) {
+            if (_cmds != null && verbose) {
                 _log.Debug($"Mover ({id}) initialized at coords: (X:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].XPos}; Y:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[id - 1].YPos})");
+            }
+        }
+
+        public void GetPosition() {
+            if (_cmds != null) {
+                _log.Debug($"Mover ({Id}) position: (X:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[Id - 1].XPos}; Y:{(float)_cmds.GetAllXbotInfo().AllXbotInfoList[Id - 1].YPos})");
             }
         }
 

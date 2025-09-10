@@ -4,6 +4,7 @@ using log4net;
 using log4net.Config;
 using System.IO;
 using System.Reflection;
+using System.Numerics;
 
 namespace PlanarMoverControl
 {
@@ -37,8 +38,10 @@ namespace PlanarMoverControl
 
                 // TESTING
                 _log.Debug("Running async test procedure...");
-                await Test();
+                //await Test();
                 //await Test2(id: 1);
+                await Test3();
+                await Task.Delay(50); // Placeholder await when starting no tasks.
             }
             else {
                 _log.Error("Failed to start PMC, false return value");
@@ -220,6 +223,33 @@ namespace PlanarMoverControl
             _log.Info("All xbots succesfully initiated and levitates");
             _log.Info("Start-up routine has completed (5/5)");
             return true;
+        }
+
+        private static async Task Test4() {
+            bool running = true;
+            int count = 0;
+            int iterations = 20;
+
+            running = false;
+
+            while (running)
+            {
+                await Movers[1].MoveTo(Constants.OuterCorners[0]);
+                await Movers[1].MoveTo(Constants.OuterCorners[1]);
+                await Movers[1].MoveTo(Constants.OuterCorners[2]);
+                await Movers[1].MoveTo(Constants.OuterCorners[3]);
+
+                count++;
+                if (count > iterations) {
+                    running = false;
+                }
+            }
+        }
+
+        private static async Task Test3() {
+            Movers[1].GetPosition();
+            Movers[2].GetPosition();
+            await Movers[1].MoveTo(new Vector2(0.660f, 0.900f));
         }
 
         private static async Task Test2(int id) {
