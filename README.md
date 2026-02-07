@@ -1,10 +1,9 @@
-# Work in Progress!
-Thank you for checking in. Please note that this repository is currently a work in progress.\
-Feel free to check back later or follow my blog (linked on the repository page) for updates.
+# About
+A clean example of how to interface and use the Acopos 6D PMC using a C# library from B&R. This serves as a baseline for Acopos 6D integration into projects where the goal is a dynamic system like a MES or any automated production line with less friction, maintenance and plug & play planning for components on the table.
 
 # Dependencies
 This project relies on a proprietary dependency:
-- `PMCLIB.dll`, which can be downloaded [here](https://planarmotor.atlassian.net/wiki/pages/viewpageattachments.action?pageId=131043557&preview=%2F131043557%2F274203448%2FPMCLIB.dll) (_when downloaded, create a `libs` folder in the repo root dir and place the `dll` file there - I might make a shell script for this later_).
+- `PMCLIB.dll`, which can be downloaded [here](https://planarmotor.atlassian.net/wiki/pages/viewpageattachments.action?pageId=131043557&preview=%2F131043557%2F274203448%2FPMCLIB.dll) (_when downloaded, create a `libs` folder in the repo root dir and place the `dll` file there).
 
 Other dependencies are:
 - `log4net`: can be added using `dotnet add package log4net` (works for .NET Core 9.0 on linux)
